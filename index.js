@@ -13,13 +13,31 @@ const express = require('express')
 
 const app = express()
 
-app.use(express.text())
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+app.get('/hello/:username', (req, res) => {
+    console.log(typeof req.params.username)
+    res.send(`hello ${req.params.usernametoUpperCase()}`)
+})
 
-app.post('/user', (req, res) => {
-    console.log(req.body)
-    res.send('Nuevo usuario')
+app.get('/add/:x/:y', (req, res) => {
+    console.log(req.params.x)
+    console.log(req.params.y)
+
+    const { x, y } = req.params
+
+    // const result = parseInt(req.params.x) + parseInt(req.params.y)
+
+    // const result = parseInt(x) + parseInt(y)
+
+    // res.send(`result: ${req.params.x} + ${req.params.y}`)
+    res.send(`la suma es ${parseInt(x) + parseInt(y)}`)
+})
+
+app.get('/users/:username/profile', (req, res) => {
+    if (req.params.username === "alejandro") {
+        return res.send('alejandro profile')
+    }
+
+    res.send('no se encontro el usuario')
 })
 
 app.listen(3000)
