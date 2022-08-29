@@ -14,11 +14,22 @@ const express = require('express')
 const app = express()
 
 app.get('/', (req, res) => {
-    res.sendFile('./static/index.html', {
-        root: __dirname
+    res.send('Hello World')
+})
+
+app.get('/myUser', (req, res) => {
+    res.json({
+        "name": "alejandro",
+        "lastname": "mazas de lizana",
+        "age": "29",
+        "points": [1, 2, 3],
+        "addres": {
+            city: "Madrid",
+            street: "San Modesto"
+        }
     })
 })
- 
+
 app.listen(3000)
 
 console.log(`Server on port ${3000}`)
