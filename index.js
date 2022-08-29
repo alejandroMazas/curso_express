@@ -13,21 +13,13 @@ const express = require('express')
 
 const app = express()
 
-app.get('/', (req, res) => {
-    res.send('Hello World')
-})
+app.use(express.text())
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 
-app.get('/myUser', (req, res) => {
-    res.json({
-        "name": "alejandro",
-        "lastname": "mazas de lizana",
-        "age": "29",
-        "points": [1, 2, 3],
-        "addres": {
-            city: "Madrid",
-            street: "San Modesto"
-        }
-    })
+app.post('/user', (req, res) => {
+    console.log(req.body)
+    res.send('Nuevo usuario')
 })
 
 app.listen(3000)
