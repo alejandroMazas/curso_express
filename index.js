@@ -13,45 +13,32 @@ const express = require('express')
 
 const app = express()
 
-app.all('/info', (req, res) => {
-    res.send('server info')
+app.use((req, res, next) => {
+    console.log('paso por aqui')
+    console.log(`Route ${req.url} Metodo ${req.method}`)
+    next()
 })
 
-app.get('/search', (req, res) => {
-    if (req.query.q === 'javascript books') {
-        res.send('lista de libros de javascript')
-    } else {
-        res.send('pagina normal')
-    }
-}
-)
-
-app.get('/hello/:username', (req, res) => {
-    console.log(typeof req.params.username)
-    res.send(`hello ${req.params.usernametoUpperCase()}`)
+app.get('/profile', (req, res) => {
+    res.send('profile page')
 })
 
-app.get('/add/:x/:y', (req, res) => {
-    console.log(req.params.x)
-    console.log(req.params.y)
-
-    const { x, y } = req.params
-
-    // const result = parseInt(req.params.x) + parseInt(req.params.y)
-
-    // const result = parseInt(x) + parseInt(y)
-
-    // res.send(`result: ${req.params.x} + ${req.params.y}`)
-    res.send(`la suma es ${parseInt(x) + parseInt(y)}`)
+app.all('/about', (req, res) => {
+    res.send('about page')
 })
 
-app.get('/users/:username/profile', (req, res) => {
-    if (req.params.username === "alejandro") {
-        return res.send('alejandro profile')
-    }
-
-    res.send('no se encontro el usuario')
+app.use((req, res, next) => {
+    if (req.query.login === 'alejandro@gmail.com') {
+        next()
+    } else
+        res.send('no autorizado')
+    next()
 })
+
+app.get('/dashboard', (req, res) => {
+    res.send('dasboard page')
+})
+
 
 app.listen(3000)
 
